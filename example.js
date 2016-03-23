@@ -5,7 +5,7 @@
 // - http://neurofinder.codeneuro.org
 // - https://github.com/codeneuro/neurofinder
 //
-// requires a few node.js modules, install with `npm install module`
+// requires a few node modules, install with `npm install <module>`
 //
 // "ndarray": "^1.0.18",
 // "ndarray-imshow": "^1.0.1",
