@@ -38,6 +38,8 @@ print('converting images to tif\n\n')
 with open('neurofinder.%s/images/conf.json' % name) as f:
     dims = json.load(f)['dims']
 files = sorted(glob('neurofinder.%s/images/*/*.bin' % name))
+if len(files) == 0:
+  files = sorted(glob('neurofinder.%s/images/*.bin' % name))
 def toarray(f):
     with open(f) as fid:
         return frombuffer(fid.read(),'uint16').reshape(dims, order='F')
