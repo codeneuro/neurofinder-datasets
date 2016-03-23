@@ -26,14 +26,14 @@ for i = 1:length(files)
 	fclose(fid);
 end
 
-% load the sources (training data only)
-sources = loadjson('sources/sources.json');
+% load the regions (training data only)
+regions = loadjson('regions/regions.json');
 masks = zeros(x, y);
-for i = 1:length(sources)
-	if isstruct(sources)
-		coords = sources(i).coordinates;
-	elseif iscell(sources)
-		coords = sources{i}.coordinates;
+for i = 1:length(regions)
+	if isstruct(regions)
+		coords = regions(i).coordinates;
+	elseif iscell(regions)
+		coords = regions{i}.coordinates;
 	end
 	masks(sub2ind([x, y], coords(:,1), coords(:,2))) = 1;
 end

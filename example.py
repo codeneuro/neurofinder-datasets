@@ -20,16 +20,16 @@ def toarray(f):
 
 imgs = array([toarray(f) for f in files])
 
-# load the sources (training data only)
-with open('sources/sources.json') as f:
-    sources = json.load(f)
+# load the regions (training data only)
+with open('regions/regions.json') as f:
+    regions = json.load(f)
 
 def tomask(coords):
     mask = zeros(dims)
     mask[zip(*coords)] = 1
     return mask
 
-masks = array([tomask(s['coordinates']) for s in sources])
+masks = array([tomask(s['coordinates']) for s in regions])
 
 # show the outputs
 plt.figure()
