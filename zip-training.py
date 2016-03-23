@@ -16,6 +16,7 @@ print('packaging data\n\n')
 os.system('cp neurofinder/datasets/README.md %s/' % name)
 os.system('cp neurofinder/datasets/example.py %s/' % name)
 os.system('cp neurofinder/datasets/example.m %s/' % name)
+os.system('cp neurofinder/datasets/example.js %s/' % name)
 os.system('mv %s neurofinder.%s' % (name, name))
 
 print('renaming sources\n\n')
