@@ -16,6 +16,7 @@
 
 % load the images
 files = rdir('images/*.tiff');
+
 for i = 1:length(files)
 	imgs(:,:,i) = imread(files(i).name);
 end
@@ -24,6 +25,7 @@ end
 % load the regions (training data only)
 regions = loadjson('regions/regions.json');
 masks = zeros(x, y);
+
 for i = 1:length(regions)
 	if isstruct(regions)
 		coords = regions(i).coordinates;
