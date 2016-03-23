@@ -12,9 +12,12 @@ testing = int(sys.argv[2]) if len(sys.argv) > 2 else 0
 
 print('downloading data\n')
 if testing:
-  os.system('s4cmd.py get -r s3://neuro.datasets.private/challenges/neurofinder.test/%s' % name)
+  status = os.system('s4cmd.py get -r s3://neuro.datasets.private/challenges/neurofinder.test/%s' % name)
 else:
-  os.system('s4cmd.py get -r s3://neuro.datasets/challenges/neurofinder/%s' % name)
+  status = os.system('s4cmd.py get -r s3://neuro.datasets/challenges/neurofinder/%s' % name)
+
+if not status == 0:
+  raise Exception('error during download, aborting!')
 
 print('packaging data\n\n')
 os.system('cp neurofinder-datasets/README.md %s/' % name)
