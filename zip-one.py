@@ -8,7 +8,7 @@ from glob import glob
 import skimage.external.tifffile as tifffile
 
 name = sys.argv[1]
-testing = sys.argv[2] if len(sys.argv) > 1 else 0
+testing = sys.argv[2] if len(sys.argv) > 2 else 0
 
 print('downloading data\n')
 if testing:
