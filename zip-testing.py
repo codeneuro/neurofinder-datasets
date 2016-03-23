@@ -2,6 +2,7 @@
 
 import sys
 import os
+import json
 from numpy import frombuffer
 from glob import glob
 import skimage.external.tifffile as tifffile
@@ -27,10 +28,11 @@ files = glob('neurofinder.%s/images/*/*.bin' % name)
 def toarray(f):
     with open(f) as fid:
         return frombuffer(fid.read(),'uint16').reshape(dims, order='F')
+os.system('mkdir neurofinder.%s/images-tif' % name)
 for i, f in enumerate(files):
-    tifffile.imsave(toarray(f), 'neurofinder.%s/images-tif/image%04g.tiff' % (name, i))
+    tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), toarray(f))
 os.system('rm -rf neurofinder.%s/images' % name)
-os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % name)
+os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
 
 print('creating zip\n\n')
 os.system('zip -r neurofinder.%s.zip neurofinder.%s' % (name, name))

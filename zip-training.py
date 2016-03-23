@@ -2,6 +2,7 @@
 
 import sys
 import os
+import json
 from numpy import frombuffer
 from glob import glob
 import skimage.external.tifffile as tifffile
@@ -18,7 +19,8 @@ os.system('cp neurofinder/datasets/example.m %s/' % name)
 os.system('mv %s neurofinder.%s' % (name, name))
 
 print('renaming sources\n\n')
-os.system('mv neurofinder.%s/sources/sources.json neurofinder.%s/regions/regions.json' % (name, name))
+os.system('mv neurofinder.%s/sources neurofinder.%s/regions' % (name, name))
+os.system('mv neurofinder.%s/regions/sources.json neurofinder.%s/regions/regions.json' % (name, name))
 
 print('converting images to tif\n\n')
 with open('neurofinder.%s/images/conf.json' % name) as f:
@@ -27,10 +29,11 @@ files = glob('neurofinder.%s/images/*/*.bin' % name)
 def toarray(f):
     with open(f) as fid:
         return frombuffer(fid.read(),'uint16').reshape(dims, order='F')
+os.system('mkdir neurofinder.%s/images-tif' % name)
 for i, f in enumerate(files):
-    tifffile.imsave(toarray(f), 'neurofinder.%s/images-tif/image%04g.tiff' % (name, i))
+    tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), toarray(f))
 os.system('rm -rf neurofinder.%s/images' % name)
-os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % name)
+os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
 
 print('creating zip\n\n')
 os.system('zip -r neurofinder.%s.zip neurofinder.%s' % (name, name))
