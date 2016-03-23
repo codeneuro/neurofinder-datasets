@@ -1,6 +1,7 @@
 % example MATLAB script for loading neurofinder data
 %
 % for more info see:
+%
 % - http://neurofinder.codeneuro.org
 % - https://github.com/codeneuro/neurofinder
 %
@@ -14,17 +15,11 @@
 %
 
 % load the images
-conf = loadjson('images/conf.json');
-files = rdir('images/*/*.bin');
-x = conf.dims(1);
-y = conf.dims(2);
-n = length(files);
-imgs = zeros([x, y, n], 'uint16');
+files = rdir('images/*.tiff');
 for i = 1:length(files)
-	fid = fopen(files(i).name,'r');
-	imgs(:,:,i) = reshape(fread(fid, 'uint16'), x, y);
-	fclose(fid);
+	imgs(:,:,i) = imread(files(i).name);
 end
+[x, y, z] = size(imgs)
 
 % load the regions (training data only)
 regions = loadjson('regions/regions.json');
