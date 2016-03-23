@@ -19,7 +19,7 @@ from scipy.misc import imread
 from glob import glob
 
 # load the images
-files = glob('images/*.tiff')
+files = sorted(glob('images/*.tiff'))
 imgs = array([imread(f) for f in files])
 dims = imgs.shape[1:]
 
