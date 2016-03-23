@@ -11,7 +11,7 @@ print 'processing training datasets'
 for name in training:
   print 'working on: dataset %s' % name
   with muffle.on():
-    status = os.system('python zip-one.py %s 0' % name)
+    status = os.system('python neurofinder-datasets/zip-one.py %s 0' % name)
   if not status == 0:
     raise Exception('failure processing dataset %s' % name)
 
@@ -19,6 +19,6 @@ print 'processing testing datasets'
 for name in testing:
   print 'working on: dataset %s' % name
   with muffle.on():
-    status = os.system('python zip-one.py %s 1' % name)
+    status = os.system('python neurofidner-datasets/zip-one.py %s 1' % name)
   if not status == 0:
     raise Exception('failure processing dataset %s' % name)
