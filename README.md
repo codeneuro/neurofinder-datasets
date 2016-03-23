@@ -6,4 +6,4 @@ Training datasets are provided with ground truth labeled regions for identified 
 
 Along with the data itself, each download includes example loading scripts in `python`, `MATLAB`, and `javascript`, the source code of which are in this [reposistory](https://github.com/codeneuro/neurofinder-datasets). 
 
-To contribute example loading scripts for other languages, just submit a pull request! If there are problems with the loading scripts, submit an issue on GitHub.
+To contribute example loading scripts for other languages, just submit a pull request! If there are problems with the loading scripts, create a GitHub issue.
