@@ -5,10 +5,7 @@
 % - http://neurofinder.codeneuro.org
 % - https://github.com/codeneuro/neurofinder
 %
-% requires two packages from the matlab file exchange
-%
-% - recursive directory listing 
-% - http://www.mathworks.com/matlabcentral/fileexchange/32226-recursive-directory-listing-enhanced-rdir
+% requires one package from the matlab file exchange
 %
 % - jsonlab
 % - http://www.mathworks.com/matlabcentral/fileexchange/33381-jsonlab--a-toolbox-to-encode-decode-json-files-in-matlab-octave
