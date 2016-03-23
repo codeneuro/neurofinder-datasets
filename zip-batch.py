@@ -17,6 +17,6 @@ for name in training:
 print 'processing testing datasets'
 for name in testing:
   print 'working on: dataset %s' % name
-  status = os.system('python neurofidner-datasets/zip.py %s 1' % name)
+  status = os.system('python neurofinder-datasets/zip.py %s 1' % name)
   if not status == 0:
     raise Exception('failure processing dataset %s' % name)
