@@ -6,8 +6,8 @@ testing = ['00.00.test', '00.01.test','01.00.test', '01.01.test','02.00.test', '
 
 for name in training:
   print 'processing training dataset %s' % name
-  os.system('python zip-training.py %s' % name)
+  os.system('python zip-one.py %s' % name)
 
 for name in testing:
   print 'processing testing dataset %s' % name
-  os.system('python zip-testing.py %s' % name)
+  os.system('python zip-one.py %s 1' % name)

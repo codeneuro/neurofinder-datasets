@@ -8,9 +8,13 @@ from glob import glob
 import skimage.external.tifffile as tifffile
 
 name = sys.argv[1]
+testing = sys.argv[2]
 
 print('downloading data\n')
-os.system('s4cmd.py get -r s3://neuro.datasets.private/challenges/neurofinder.test/%s' % name)
+if testing:
+  os.system('s4cmd.py get -r s3://neuro.datasets.private/challenges/neurofinder.test/%s' % name)
+else:
+  os.system('s4cmd.py get -r s3://neuro.datasets/challenges/neurofinder/%s' % name)
 
 print('packaging data\n\n')
 os.system('cp neurofinder/datasets/README.md %s/' % name)
@@ -19,8 +23,13 @@ os.system('cp neurofinder/datasets/example.m %s/' % name)
 os.system('cp neurofinder/datasets/example.js %s/' % name)
 os.system('mv %s neurofinder.%s' % (name, name))
 
-print('removing sources\n\n')
-os.system('rm -rf neurofinder.%s/sources' % name)
+if testing:
+  print('removing sources\n\n')
+  os.system('rm -rf neurofinder.%s/sources' % name)
+else:
+  print('renaming sources\n\n')
+  os.system('mv neurofinder.%s/sources neurofinder.%s/regions' % (name, name))
+  os.system('mv neurofinder.%s/regions/sources.json neurofinder.%s/regions/regions.json' % (name, name))
 
 print('converting images to tif\n\n')
 with open('neurofinder.%s/images/conf.json' % name) as f:
