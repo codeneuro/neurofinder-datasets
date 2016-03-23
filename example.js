@@ -48,5 +48,5 @@ regions.forEach(function (region) {
 })
 
 // show the outputs
-imshow(mask, {colormap: 'gray'})
 imshow(sum, {colormap: 'gray'})
+imshow(mask, {colormap: 'gray'})
