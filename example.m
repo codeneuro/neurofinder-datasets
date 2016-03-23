@@ -15,10 +15,11 @@
 %
 
 % load the images
-files = rdir('images/*.tiff');
+files = dir('images/*.tiff');
 
 for i = 1:length(files)
-	imgs(:,:,i) = imread(files(i).name);
+    fname = strcat('images/', files(i).name);
+	imgs(:,:,i) = imread(fname);
 end
 [x, y, z] = size(imgs)
 
