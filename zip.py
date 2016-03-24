@@ -40,8 +40,8 @@ with open('neurofinder.%s/images/conf.json' % name) as f:
 files = sorted(glob('neurofinder.%s/images/*/*.bin' % name))
 if len(files) == 0:
   files = sorted(glob('neurofinder.%s/images/*.bin' % name))
-if len(files) > 3500:
-  files = files[0:3500]
+if len(files) > 3000:
+  files = files[0:3000]
 def toarray(f):
     with open(f) as fid:
         return frombuffer(fid.read(),'uint16').reshape(dims, order='F')
