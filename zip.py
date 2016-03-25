@@ -50,7 +50,7 @@ def toarray(f):
 os.system('mkdir neurofinder.%s/images-tif' % name)
 for i, f in enumerate(files):
     im = toarray(f)
-    im = im.clip(0, im.max())
+    im = im.clip(0, im.max()).astype('uint16')
     tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
 os.system('rm -rf neurofinder.%s/images' % name)
 os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
