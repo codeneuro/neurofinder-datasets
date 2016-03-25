@@ -36,7 +36,9 @@ else:
 
 print('converting images to tif\n\n')
 with open('neurofinder.%s/images/conf.json' % name) as f:
-    dims = json.load(f)['dims']
+    blob = json.load(f)
+    dims = blob['dims']
+    dtype = blob['dtype']
 files = sorted(glob('neurofinder.%s/images/*/*.bin' % name))
 if len(files) == 0:
   files = sorted(glob('neurofinder.%s/images/*.bin' % name))
@@ -44,10 +46,12 @@ if len(files) > 3000:
   files = files[0:3000]
 def toarray(f):
     with open(f) as fid:
-        return frombuffer(fid.read(),'uint16').reshape(dims, order='F')
+        return frombuffer(fid.read(),dtype).reshape(dims, order='F')
 os.system('mkdir neurofinder.%s/images-tif' % name)
 for i, f in enumerate(files):
-    tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), toarray(f))
+    im = toarray(f)
+    im = im.clip(0, im.max())
+    tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
 os.system('rm -rf neurofinder.%s/images' % name)
 os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
 
