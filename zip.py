@@ -34,26 +34,29 @@ else:
   os.system('mv neurofinder.%s/sources neurofinder.%s/regions' % (name, name))
   os.system('mv neurofinder.%s/regions/sources.json neurofinder.%s/regions/regions.json' % (name, name))
 
-print('converting images to tif\n\n')
-with open('neurofinder.%s/images/conf.json' % name) as f:
-    blob = json.load(f)
-    dims = blob['dims']
-    dtype = blob['dtype']
-files = sorted(glob('neurofinder.%s/images/*/*.bin' % name))
-if len(files) == 0:
-  files = sorted(glob('neurofinder.%s/images/*.bin' % name))
-if len(files) > 3000:
-  files = files[0:3000]
-def toarray(f):
-    with open(f) as fid:
-        return frombuffer(fid.read(),dtype).reshape(dims, order='F')
-os.system('mkdir neurofinder.%s/images-tif' % name)
-for i, f in enumerate(files):
-    im = toarray(f)
-    im = im.clip(0, im.max()).astype('uint16')
-    tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
-os.system('rm -rf neurofinder.%s/images' % name)
-os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
+if len(glob('neurofinder.%s/images/*.tiff')) == 0:
+  print('converting images to tif\n\n')
+  with open('neurofinder.%s/images/conf.json' % name) as f:
+      blob = json.load(f)
+      dims = blob['dims']
+      dtype = blob['dtype']
+  files = sorted(glob('neurofinder.%s/images/*/*.bin' % name))
+  if len(files) == 0:
+    files = sorted(glob('neurofinder.%s/images/*.bin' % name))
+  if len(files) > 3000:
+    files = files[0:3000]
+  def toarray(f):
+      with open(f) as fid:
+          return frombuffer(fid.read(),dtype).reshape(dims, order='F')
+  os.system('mkdir neurofinder.%s/images-tif' % name)
+  for i, f in enumerate(files):
+      im = toarray(f)
+      im = im.clip(0, im.max()).astype('uint16')
+      tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
+  os.system('rm -rf neurofinder.%s/images' % name)
+  os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
+else:
+  print('skipping tiff conversion\n\n')
 
 print('creating zip\n\n')
 os.system('zip -r neurofinder.%s.zip neurofinder.%s' % (name, name))
