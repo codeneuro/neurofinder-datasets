@@ -34,7 +34,7 @@ else:
   os.system('mv neurofinder.%s/sources neurofinder.%s/regions' % (name, name))
   os.system('mv neurofinder.%s/regions/sources.json neurofinder.%s/regions/regions.json' % (name, name))
 
-if len(glob('neurofinder.%s/images/*.tiff')) == 0:
+if len(glob('neurofinder.%s/images/*.tiff' % name)) == 0:
   print('converting images to tif\n\n')
   with open('neurofinder.%s/images/conf.json' % name) as f:
       blob = json.load(f)
