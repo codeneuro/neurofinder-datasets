@@ -50,7 +50,7 @@ if len(glob('neurofinder.%s/images/*.tiff' % name)) == 0:
   os.system('mkdir neurofinder.%s/images-tif' % name)
   if downsample:
       for i in range(len(files)/4):
-          if i * 4 + 4 < len(files):
+          if i * 4 + 4 <= len(files):
               tmp = zeros(dims)
               for j in range(4):
                   im = toarray(files[i * 4 + j])
