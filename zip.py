@@ -3,12 +3,13 @@
 import sys
 import os
 import json
-from numpy import frombuffer
+from numpy import frombuffer, zeros
 from glob import glob
 import skimage.external.tifffile as tifffile
 
 name = sys.argv[1]
 testing = int(sys.argv[2]) if len(sys.argv) > 2 else 0
+downsample = int(sys.argv[3]) if len(sys.argv) > 3 else 0
 
 print('downloading data\n')
 if testing:
@@ -47,10 +48,21 @@ if len(glob('neurofinder.%s/images/*.tiff' % name)) == 0:
       with open(f) as fid:
           return frombuffer(fid.read(),dtype).reshape(dims, order='F')
   os.system('mkdir neurofinder.%s/images-tif' % name)
-  for i, f in enumerate(files):
-      im = toarray(f)
-      im = im.clip(0, im.max()).astype('uint16')
-      tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
+  if downsample:
+      for i in range(len(files)/4):
+          if i * 4 + 4 < len(files):
+              tmp = zeros(dims)
+              for j in range(4):
+                  im = toarray(f[i * 4 + j])
+                  im = im.clip(0, im.max()).astype('uint16')
+                  tmp += im
+              tmp = (tmp / 4.0).astype('uint16')
+              tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
+  else:
+      for i, f in enumerate(files):
+          im = toarray(f)
+          im = im.clip(0, im.max()).astype('uint16')
+          tifffile.imsave('neurofinder.%s/images-tif/image%05g.tiff' % (name, i), im)
   os.system('rm -rf neurofinder.%s/images' % name)
   os.system('mv neurofinder.%s/images-tif neurofinder.%s/images' % (name, name))
 else:
