@@ -53,7 +53,7 @@ if len(glob('neurofinder.%s/images/*.tiff' % name)) == 0:
           if i * 4 + 4 < len(files):
               tmp = zeros(dims)
               for j in range(4):
-                  im = toarray(f[i * 4 + j])
+                  im = toarray(files[i * 4 + j])
                   im = im.clip(0, im.max()).astype('uint16')
                   tmp += im
               tmp = (tmp / 4.0).astype('uint16')
