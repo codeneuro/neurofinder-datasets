@@ -43,8 +43,6 @@ if len(glob('neurofinder.%s/images/*.tiff' % name)) == 0:
   files = sorted(glob('neurofinder.%s/images/*/*.bin' % name))
   if len(files) == 0:
     files = sorted(glob('neurofinder.%s/images/*.bin' % name))
-  if len(files) > 3000:
-    files = files[0:3000]
   def toarray(f):
       with open(f) as fid:
           return frombuffer(fid.read(),dtype).reshape(dims, order='F')
